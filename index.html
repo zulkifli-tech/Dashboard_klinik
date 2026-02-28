@@ -1,0 +1,784 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>Klinik Kasih Sayang · Revenue</title>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+
+:root{
+  --bg:#eef6ff;
+  --bg2:#f8fbff;
+  --card:#ffffff;
+  --card2:#f0f7ff;
+  --border:#c8e0f8;
+  --blue:#1a7fd4;
+  --blue2:#2196f3;
+  --blue-light:#e3f2fd;
+  --cyan:#00bcd4;
+  --green:#00c853;
+  --green-light:#e8f5e9;
+  --red:#f44336;
+  --red-light:#ffebee;
+  --orange:#ff9800;
+  --orange-light:#fff3e0;
+  --purple:#7c3aed;
+  --text:#1a2744;
+  --text2:#3d5a80;
+  --muted:#7a99b8;
+}
+
+body{
+  background:var(--bg);
+  color:var(--text);
+  font-family:'Plus Jakarta Sans',sans-serif;
+  min-height:100vh;
+  overflow-x:hidden;
+}
+
+body::before{
+  content:'';
+  position:fixed;inset:0;
+  background:
+    radial-gradient(ellipse 80% 50% at 10% 0%, rgba(33,150,243,0.12) 0%, transparent 55%),
+    radial-gradient(ellipse 60% 40% at 90% 100%, rgba(0,188,212,0.1) 0%, transparent 50%),
+    radial-gradient(ellipse 50% 50% at 50% 50%, rgba(255,255,255,0.5) 0%, transparent 60%);
+  pointer-events:none;z-index:0;
+}
+
+/* SUBTLE CROSS PATTERN */
+body::after{
+  content:'';
+  position:fixed;inset:0;
+  background-image:radial-gradient(rgba(33,150,243,0.06) 1px, transparent 1px);
+  background-size:24px 24px;
+  pointer-events:none;z-index:0;
+}
+
+.wrap{
+  position:relative;z-index:1;
+  padding:16px;
+  max-width:480px;
+  margin:0 auto;
+}
+
+/* HEADER */
+.header{
+  background:linear-gradient(135deg,#1a7fd4,#0d47a1);
+  border-radius:20px;
+  padding:18px;
+  margin-bottom:16px;
+  position:relative;overflow:hidden;
+  box-shadow:0 8px 32px rgba(26,127,212,0.3);
+}
+
+.header::before{
+  content:'';
+  position:absolute;top:-30px;right:-30px;
+  width:120px;height:120px;border-radius:50%;
+  background:rgba(255,255,255,0.06);
+}
+.header::after{
+  content:'';
+  position:absolute;bottom:-40px;right:20px;
+  width:100px;height:100px;border-radius:50%;
+  background:rgba(255,255,255,0.04);
+}
+
+.header-top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:14px;}
+.logo-row{display:flex;align-items:center;gap:10px;}
+.logo-box{
+  width:44px;height:44px;border-radius:12px;
+  background:rgba(255,255,255,0.2);
+  display:flex;align-items:center;justify-content:center;font-size:24px;
+  backdrop-filter:blur(10px);
+  border:1px solid rgba(255,255,255,0.3);
+}
+.brand-name{font-size:17px;font-weight:800;color:#fff;line-height:1.2;}
+.brand-sub{font-size:9px;color:rgba(255,255,255,0.6);letter-spacing:0.15em;text-transform:uppercase;margin-top:2px;}
+
+.live-badge{
+  display:flex;align-items:center;gap:5px;
+  background:rgba(255,255,255,0.15);
+  border:1px solid rgba(255,255,255,0.3);
+  border-radius:20px;padding:4px 10px;
+  font-size:9px;color:#fff;
+  backdrop-filter:blur(10px);
+}
+.live-dot{width:5px;height:5px;background:#4cff91;border-radius:50%;animation:blink 1s ease infinite;}
+
+.header-stats{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;}
+.hstat{
+  background:rgba(255,255,255,0.12);
+  border:1px solid rgba(255,255,255,0.2);
+  border-radius:12px;padding:10px;
+  backdrop-filter:blur(10px);
+}
+.hstat-val{font-size:15px;font-weight:800;color:#fff;line-height:1;}
+.hstat-lbl{font-size:8px;color:rgba(255,255,255,0.6);text-transform:uppercase;letter-spacing:0.08em;margin-top:2px;}
+
+/* DATE STRIP */
+.date-strip{
+  background:var(--card);border:1px solid var(--border);
+  border-radius:12px;padding:10px 14px;
+  display:flex;justify-content:space-between;align-items:center;
+  margin-bottom:16px;
+  box-shadow:0 2px 8px rgba(26,127,212,0.08);
+}
+.date-lbl{font-size:10px;color:var(--muted);}
+.date-val{font-size:11px;color:var(--blue);font-weight:700;}
+
+/* SECTION */
+.section-label{
+  font-size:9px;letter-spacing:0.2em;text-transform:uppercase;
+  color:var(--blue);margin-bottom:10px;margin-top:20px;
+  display:flex;align-items:center;gap:8px;font-weight:700;
+}
+.section-label::after{content:'';flex:1;height:1px;background:linear-gradient(90deg,var(--border),transparent);}
+
+/* KPI */
+.kpi-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px;}
+
+.kpi{
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:16px;padding:14px;
+  position:relative;overflow:hidden;
+  animation:fadeUp 0.4s ease both;
+  box-shadow:0 2px 12px rgba(26,127,212,0.08);
+}
+
+.kpi-stripe{position:absolute;top:0;left:0;right:0;height:3px;border-radius:3px 3px 0 0;}
+
+.kpi-icon-wrap{
+  width:36px;height:36px;border-radius:10px;
+  display:flex;align-items:center;justify-content:center;
+  font-size:18px;margin-bottom:10px;
+}
+.kpi-val{font-size:22px;font-weight:800;line-height:1;margin-bottom:2px;}
+.kpi-lbl{font-size:10px;color:var(--muted);line-height:1.3;}
+.kpi-badge{display:inline-block;font-size:9px;padding:2px 8px;border-radius:8px;font-weight:700;margin-top:5px;}
+.up{background:#e8f5e9;color:#00c853;}
+.dn{background:#ffebee;color:#f44336;}
+
+/* CARD */
+.card{
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:16px;padding:16px;
+  animation:fadeUp 0.4s ease both;
+  margin-bottom:10px;
+  box-shadow:0 2px 12px rgba(26,127,212,0.06);
+}
+.card-title{font-size:13px;font-weight:800;color:var(--text);margin-bottom:2px;display:flex;align-items:center;gap:6px;}
+.card-sub{font-size:8px;color:var(--muted);letter-spacing:0.12em;text-transform:uppercase;margin-bottom:14px;font-family:'Space Mono',monospace;}
+
+/* REVENUE BREAKDOWN */
+.rev-item{
+  display:flex;align-items:center;gap:10px;
+  padding:10px 0;border-bottom:1px solid #f0f7ff;
+}
+.rev-item:last-child{border-bottom:none;}
+.rev-icon{
+  width:36px;height:36px;border-radius:10px;
+  display:flex;align-items:center;justify-content:center;
+  font-size:18px;flex-shrink:0;
+}
+.rev-info{flex:1;}
+.rev-name{font-size:12px;font-weight:600;color:var(--text);margin-bottom:3px;}
+.rev-bar-bg{height:5px;background:#f0f7ff;border-radius:3px;overflow:hidden;}
+.rev-bar-fill{height:100%;border-radius:3px;}
+.rev-right{text-align:right;flex-shrink:0;}
+.rev-val{font-size:13px;font-weight:800;color:var(--text);}
+.rev-pct{font-size:9px;color:var(--muted);font-family:'Space Mono',monospace;}
+
+/* PANEL TABLE */
+.panel-item{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:10px 12px;border-radius:10px;margin-bottom:6px;
+  background:var(--bg2);border:1px solid var(--border);
+}
+.panel-left{display:flex;align-items:center;gap:8px;}
+.panel-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0;}
+.panel-name{font-size:11px;font-weight:600;color:var(--text);}
+.panel-patients{font-size:9px;color:var(--muted);}
+.panel-right{text-align:right;}
+.panel-val{font-size:13px;font-weight:800;color:var(--blue);}
+.panel-status{font-size:8px;padding:2px 7px;border-radius:6px;margin-top:2px;display:inline-block;}
+.paid{background:#e8f5e9;color:#00c853;}
+.pending{background:#fff3e0;color:#ff9800;}
+.partial{background:#e3f2fd;color:#1a7fd4;}
+
+/* OUTSTANDING */
+.outstanding-box{
+  background:linear-gradient(135deg,#fff3e0,#fff8f0);
+  border:1px solid #ffcc80;border-radius:12px;
+  padding:12px 14px;margin-top:10px;
+}
+.outstanding-hd{font-size:9px;color:var(--orange);text-transform:uppercase;letter-spacing:0.15em;font-weight:700;margin-bottom:6px;}
+.outstanding-body{display:flex;justify-content:space-between;align-items:center;}
+.outstanding-val{font-size:28px;font-weight:800;color:var(--orange);}
+.outstanding-desc{font-size:10px;color:#e65100;line-height:1.5;}
+
+/* SVG CHART */
+.svg-wrap{width:100%;overflow:visible;}
+
+/* TARGET */
+.target-item{margin-bottom:13px;}
+.target-hd{display:flex;justify-content:space-between;margin-bottom:5px;}
+.target-name{font-size:11px;color:var(--text);font-weight:600;}
+.target-pct{font-size:12px;font-weight:800;}
+.target-bar-bg{height:8px;background:#f0f7ff;border-radius:4px;overflow:hidden;}
+.target-bar-fill{height:100%;border-radius:4px;}
+.target-sub{display:flex;justify-content:space-between;font-size:9px;color:var(--muted);margin-top:3px;font-family:'Space Mono',monospace;}
+
+/* PAYMENT */
+.pay-row{display:flex;align-items:center;gap:10px;margin-bottom:11px;}
+.pay-icon-box{
+  width:34px;height:34px;border-radius:10px;
+  display:flex;align-items:center;justify-content:center;
+  font-size:16px;flex-shrink:0;
+}
+.pay-info{flex:1;}
+.pay-hd{display:flex;justify-content:space-between;align-items:center;margin-bottom:4px;}
+.pay-name{font-size:11px;font-weight:600;color:var(--text);}
+.pay-right{display:flex;align-items:center;gap:6px;}
+.pay-pct{font-size:9px;color:var(--muted);font-family:'Space Mono',monospace;}
+.pay-val{font-size:12px;font-weight:800;color:var(--text);}
+.pay-bar-bg{height:5px;background:#f0f7ff;border-radius:3px;overflow:hidden;}
+.pay-bar-fill{height:100%;border-radius:3px;}
+
+/* PEAK */
+.peak-wrap{display:flex;align-items:flex-end;gap:4px;height:80px;margin-bottom:8px;}
+.peak-col{flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;height:100%;justify-content:flex-end;}
+.peak-bar{width:100%;border-radius:3px 3px 0 0;min-height:3px;}
+.peak-lbl{font-size:7px;color:var(--muted);text-align:center;}
+
+/* DAY */
+.day-wrap{display:flex;align-items:flex-end;gap:5px;height:70px;margin-bottom:8px;}
+.day-col{flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;height:100%;justify-content:flex-end;}
+.day-bar{width:100%;border-radius:3px 3px 0 0;}
+.day-lbl{font-size:9px;color:var(--muted);}
+
+/* ALERTS */
+.alert-card{
+  border-radius:12px;padding:12px 14px;
+  display:flex;align-items:flex-start;gap:10px;
+  margin-bottom:8px;border-left:3px solid transparent;
+}
+.alert-warn{background:#fff3e0;border-color:var(--orange);}
+.alert-ok{background:#e8f5e9;border-color:var(--green);}
+.alert-info{background:#e3f2fd;border-color:var(--blue2);}
+.alert-icon{font-size:18px;flex-shrink:0;margin-top:1px;}
+.alert-title{font-size:12px;font-weight:700;margin-bottom:3px;}
+.alert-desc{font-size:10px;line-height:1.5;}
+
+/* SUMMARY */
+.sum-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+.sum-item{
+  background:var(--card);border:1px solid var(--border);
+  border-radius:12px;padding:12px;
+  display:flex;align-items:center;gap:10px;
+  box-shadow:0 2px 8px rgba(26,127,212,0.06);
+}
+.sum-icon{font-size:20px;flex-shrink:0;}
+.sum-val{font-size:16px;font-weight:800;color:var(--text);line-height:1;}
+.sum-lbl{font-size:9px;color:var(--muted);text-transform:uppercase;letter-spacing:0.06em;margin-top:1px;line-height:1.3;}
+
+/* TAB BAR */
+.tab-bar{
+  position:fixed;bottom:0;left:0;right:0;
+  background:rgba(255,255,255,0.95);
+  backdrop-filter:blur(16px);
+  border-top:1px solid var(--border);
+  display:flex;justify-content:space-around;align-items:center;
+  padding:8px 0 14px;z-index:100;
+  box-shadow:0 -4px 20px rgba(26,127,212,0.1);
+}
+.tab-item{
+  display:flex;flex-direction:column;align-items:center;gap:3px;
+  font-size:9px;color:var(--muted);cursor:pointer;padding:4px 10px;
+  font-family:'Space Mono',monospace;
+}
+.tab-item.active{color:var(--blue);}
+.tab-icon{font-size:18px;}
+.bottom-space{height:72px;}
+
+.footer{
+  text-align:center;margin-top:16px;
+  font-size:8px;color:var(--muted);
+  letter-spacing:0.2em;text-transform:uppercase;
+  font-family:'Space Mono',monospace;
+}
+
+@keyframes fadeUp{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:0.3}}
+
+@media(min-width:600px){
+  .wrap{max-width:1000px;}
+  .kpi-grid{grid-template-columns:repeat(4,1fr);}
+  .two-col{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+  .two-col .card{margin-bottom:0;}
+  .three-col{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;}
+  .three-col .card{margin-bottom:0;}
+  .sum-grid{grid-template-columns:repeat(4,1fr);}
+  .tab-bar{display:none;}
+  .bottom-space{height:0;}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <!-- HEADER -->
+  <div class="header">
+    <div class="header-top">
+      <div class="logo-row">
+        <div class="logo-box">🏥</div>
+        <div>
+          <div class="brand-name">Klinik Kasih Sayang</div>
+          <div class="brand-sub">Revenue Dashboard · Feb 2026</div>
+        </div>
+      </div>
+      <div class="live-badge"><div class="live-dot"></div>LIVE</div>
+    </div>
+    <div class="header-stats">
+      <div class="hstat">
+        <div class="hstat-val">RM84.2K</div>
+        <div class="hstat-lbl">Revenue</div>
+      </div>
+      <div class="hstat">
+        <div class="hstat-val">1,284</div>
+        <div class="hstat-lbl">Pesakit</div>
+      </div>
+      <div class="hstat">
+        <div class="hstat-val">RM65.5</div>
+        <div class="hstat-lbl">Avg/Pesakit</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- DATE -->
+  <div class="date-strip">
+    <span class="date-lbl">📅 Tempoh Laporan</span>
+    <span class="date-val">Februari 2026</span>
+  </div>
+
+  <!-- 1. KPI -->
+  <div class="section-label">💰 Ringkasan Revenue</div>
+  <div class="kpi-grid">
+    <div class="kpi" style="animation-delay:0.05s;">
+      <div class="kpi-stripe" style="background:linear-gradient(90deg,#1a7fd4,#00bcd4);"></div>
+      <div class="kpi-icon-wrap" style="background:#e3f2fd;">💵</div>
+      <div class="kpi-val" style="color:#1a7fd4;">RM 4,210</div>
+      <div class="kpi-lbl">Revenue Hari Ini</div>
+      <span class="kpi-badge up">▲ 16%</span>
+    </div>
+    <div class="kpi" style="animation-delay:0.1s;">
+      <div class="kpi-stripe" style="background:linear-gradient(90deg,#00c853,#69f0ae);"></div>
+      <div class="kpi-icon-wrap" style="background:#e8f5e9;">📅</div>
+      <div class="kpi-val" style="color:#00c853;">RM 26.4K</div>
+      <div class="kpi-lbl">Revenue Minggu</div>
+      <span class="kpi-badge up">▲ 11%</span>
+    </div>
+    <div class="kpi" style="animation-delay:0.15s;">
+      <div class="kpi-stripe" style="background:linear-gradient(90deg,#7c3aed,#a855f7);"></div>
+      <div class="kpi-icon-wrap" style="background:#f3e8ff;">🗓️</div>
+      <div class="kpi-val" style="color:#7c3aed;">RM 84.2K</div>
+      <div class="kpi-lbl">Revenue Bulan</div>
+      <span class="kpi-badge up">▲ 13%</span>
+    </div>
+    <div class="kpi" style="animation-delay:0.2s;">
+      <div class="kpi-stripe" style="background:linear-gradient(90deg,#ff9800,#ffd200);"></div>
+      <div class="kpi-icon-wrap" style="background:#fff3e0;">👥</div>
+      <div class="kpi-val" style="color:#ff9800;">1,284</div>
+      <div class="kpi-lbl">Pesakit Bulan Ini</div>
+      <span class="kpi-badge up">▲ 8%</span>
+    </div>
+  </div>
+
+  <!-- 2. REVENUE BREAKDOWN -->
+  <div class="section-label">🏥 Breakdown Revenue</div>
+  <div class="card">
+    <div class="card-title">💊 Walk-in vs Panel</div>
+    <div class="card-sub">Sumber Pendapatan · Feb 2026</div>
+
+    <div class="rev-item">
+      <div class="rev-icon" style="background:#e3f2fd;">🚶</div>
+      <div class="rev-info">
+        <div class="rev-name">Walk-in (Bayar Sendiri)</div>
+        <div class="rev-bar-bg" style="margin-top:4px;"><div class="rev-bar-fill" style="width:55%;background:linear-gradient(90deg,#1a7fd4,#00bcd4);"></div></div>
+      </div>
+      <div class="rev-right">
+        <div class="rev-val">RM 46,310</div>
+        <div class="rev-pct">55%</div>
+      </div>
+    </div>
+
+    <div class="rev-item">
+      <div class="rev-icon" style="background:#f3e8ff;">🏢</div>
+      <div class="rev-info">
+        <div class="rev-name">Panel Syarikat</div>
+        <div class="rev-bar-bg" style="margin-top:4px;"><div class="rev-bar-fill" style="width:32%;background:linear-gradient(90deg,#7c3aed,#a855f7);"></div></div>
+      </div>
+      <div class="rev-right">
+        <div class="rev-val">RM 26,944</div>
+        <div class="rev-pct">32%</div>
+      </div>
+    </div>
+
+    <div class="rev-item">
+      <div class="rev-icon" style="background:#e8f5e9;">📱</div>
+      <div class="rev-info">
+        <div class="rev-name">Telehealth/Online</div>
+        <div class="rev-bar-bg" style="margin-top:4px;"><div class="rev-bar-fill" style="width:8%;background:linear-gradient(90deg,#00c853,#69f0ae);"></div></div>
+      </div>
+      <div class="rev-right">
+        <div class="rev-val">RM 6,736</div>
+        <div class="rev-pct">8%</div>
+      </div>
+    </div>
+
+    <div class="rev-item">
+      <div class="rev-icon" style="background:#fff3e0;">💉</div>
+      <div class="rev-info">
+        <div class="rev-name">Procedure & Treatment</div>
+        <div class="rev-bar-bg" style="margin-top:4px;"><div class="rev-bar-fill" style="width:5%;background:linear-gradient(90deg,#ff9800,#ffd200);"></div></div>
+      </div>
+      <div class="rev-right">
+        <div class="rev-val">RM 4,210</div>
+        <div class="rev-pct">5%</div>
+      </div>
+    </div>
+
+    <!-- Total -->
+    <div style="margin-top:12px;padding:12px 14px;background:linear-gradient(135deg,#e3f2fd,#f0f9ff);border:1px solid #90caf9;border-radius:12px;display:flex;justify-content:space-between;align-items:center;">
+      <span style="font-size:10px;color:var(--blue);font-weight:700;text-transform:uppercase;letter-spacing:0.1em;">✦ Jumlah Revenue</span>
+      <span style="font-size:22px;font-weight:800;color:var(--blue);">RM 84,200</span>
+    </div>
+  </div>
+
+  <!-- 3. PANEL BREAKDOWN -->
+  <div class="section-label">🏢 Panel Syarikat</div>
+  <div class="card">
+    <div class="card-title">📋 Senarai Panel & Status</div>
+    <div class="card-sub">Claim & Pembayaran · Feb 2026</div>
+
+    <div class="panel-item">
+      <div class="panel-left">
+        <div class="panel-dot" style="background:#1a7fd4;"></div>
+        <div>
+          <div class="panel-name">Petronas</div>
+          <div class="panel-patients">142 pesakit</div>
+        </div>
+      </div>
+      <div class="panel-right">
+        <div class="panel-val">RM 8,520</div>
+        <div class="panel-status paid">✓ Dibayar</div>
+      </div>
+    </div>
+
+    <div class="panel-item">
+      <div class="panel-left">
+        <div class="panel-dot" style="background:#7c3aed;"></div>
+        <div>
+          <div class="panel-name">Maybank</div>
+          <div class="panel-patients">98 pesakit</div>
+        </div>
+      </div>
+      <div class="panel-right">
+        <div class="panel-val">RM 5,880</div>
+        <div class="panel-status paid">✓ Dibayar</div>
+      </div>
+    </div>
+
+    <div class="panel-item">
+      <div class="panel-left">
+        <div class="panel-dot" style="background:#ff9800;"></div>
+        <div>
+          <div class="panel-name">TNB</div>
+          <div class="panel-patients">76 pesakit</div>
+        </div>
+      </div>
+      <div class="panel-right">
+        <div class="panel-val">RM 4,560</div>
+        <div class="panel-status pending">⏳ Pending</div>
+      </div>
+    </div>
+
+    <div class="panel-item">
+      <div class="panel-left">
+        <div class="panel-dot" style="background:#00c853;"></div>
+        <div>
+          <div class="panel-name">Felda</div>
+          <div class="panel-patients">64 pesakit</div>
+        </div>
+      </div>
+      <div class="panel-right">
+        <div class="panel-val">RM 3,840</div>
+        <div class="panel-status partial">◑ Separa</div>
+      </div>
+    </div>
+
+    <div class="panel-item">
+      <div class="panel-left">
+        <div class="panel-dot" style="background:#f44336;"></div>
+        <div>
+          <div class="panel-name">Telekom</div>
+          <div class="panel-patients">38 pesakit</div>
+        </div>
+      </div>
+      <div class="panel-right">
+        <div class="panel-val">RM 2,280</div>
+        <div class="panel-status pending">⏳ Pending</div>
+      </div>
+    </div>
+
+    <div class="outstanding-box">
+      <div class="outstanding-hd">⚠ Outstanding Claims Belum Dibayar</div>
+      <div class="outstanding-body">
+        <div class="outstanding-desc">3 syarikat panel<br>belum settle payment<br><span style="color:#bf360c;font-weight:700;">Perlu follow up!</span></div>
+        <div class="outstanding-val">RM 10,680</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 4. TREND + TARGET -->
+  <div class="section-label">📈 Trend & Target</div>
+  <div class="two-col">
+
+    <!-- Trend -->
+    <div class="card">
+      <div class="card-title">📈 Trend Revenue</div>
+      <div class="card-sub">6 Bulan · Keseluruhan</div>
+      <svg class="svg-wrap" viewBox="0 0 300 110" fill="none">
+        <defs>
+          <linearGradient id="tg" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#1a7fd4" stop-opacity="0.2"/>
+            <stop offset="100%" stop-color="#1a7fd4" stop-opacity="0"/>
+          </linearGradient>
+        </defs>
+        <line x1="0" y1="25" x2="300" y2="25" stroke="#e3f2fd" stroke-width="1"/>
+        <line x1="0" y1="55" x2="300" y2="55" stroke="#e3f2fd" stroke-width="1"/>
+        <line x1="0" y1="85" x2="300" y2="85" stroke="#e3f2fd" stroke-width="1"/>
+        <path d="M0,92 L60,82 L120,75 L180,62 L240,50 L300,35 L300,100 L0,100 Z" fill="url(#tg)"/>
+        <path d="M0,92 L60,82 L120,75 L180,62 L240,50 L300,35" stroke="#1a7fd4" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+        <circle cx="300" cy="35" r="4" fill="#1a7fd4"/>
+        <text x="2" y="108" fill="#7a99b8" font-size="8" font-family="monospace">Sep</text>
+        <text x="112" y="108" fill="#7a99b8" font-size="8" font-family="monospace">Nov</text>
+        <text x="255" y="108" fill="#7a99b8" font-size="8" font-family="monospace">Feb'26</text>
+      </svg>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:10px;">
+        <div style="background:#e3f2fd;border-radius:10px;padding:8px;text-align:center;">
+          <div style="font-size:13px;font-weight:800;color:#1a7fd4;">RM72.8K</div>
+          <div style="font-size:8px;color:var(--muted);">Bulan Lepas</div>
+        </div>
+        <div style="background:#e8f5e9;border-radius:10px;padding:8px;text-align:center;">
+          <div style="font-size:13px;font-weight:800;color:#00c853;">+15.7%</div>
+          <div style="font-size:8px;color:var(--muted);">Pertumbuhan</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Target -->
+    <div class="card">
+      <div class="card-title">🎯 Target vs Actual</div>
+      <div class="card-sub">Pencapaian · Feb 2026</div>
+      <div class="target-item">
+        <div class="target-hd">
+          <span class="target-name">Revenue Harian</span>
+          <span class="target-pct" style="color:#00c853;">105%</span>
+        </div>
+        <div class="target-bar-bg"><div class="target-bar-fill" style="width:100%;background:linear-gradient(90deg,#00c853,#69f0ae);"></div></div>
+        <div class="target-sub"><span>RM4,210</span><span>Target: RM4,000</span></div>
+      </div>
+      <div class="target-item">
+        <div class="target-hd">
+          <span class="target-name">Revenue Mingguan</span>
+          <span class="target-pct" style="color:#1a7fd4;">88%</span>
+        </div>
+        <div class="target-bar-bg"><div class="target-bar-fill" style="width:88%;background:linear-gradient(90deg,#1a7fd4,#00bcd4);"></div></div>
+        <div class="target-sub"><span>RM26,400</span><span>Target: RM30,000</span></div>
+      </div>
+      <div class="target-item">
+        <div class="target-hd">
+          <span class="target-name">Revenue Bulanan</span>
+          <span class="target-pct" style="color:#7c3aed;">94%</span>
+        </div>
+        <div class="target-bar-bg"><div class="target-bar-fill" style="width:94%;background:linear-gradient(90deg,#7c3aed,#a855f7);"></div></div>
+        <div class="target-sub"><span>RM84,200</span><span>Target: RM90,000</span></div>
+      </div>
+      <div class="target-item">
+        <div class="target-hd">
+          <span class="target-name">Pesakit Baru</span>
+          <span class="target-pct" style="color:#ff9800;">112%</span>
+        </div>
+        <div class="target-bar-bg"><div class="target-bar-fill" style="width:100%;background:linear-gradient(90deg,#ff9800,#ffd200);"></div></div>
+        <div class="target-sub"><span>224 org</span><span>Target: 200</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 5. PEAK + PAYMENT -->
+  <div class="section-label">⏰ Masa & Pembayaran</div>
+  <div class="two-col">
+
+    <!-- Peak Hours -->
+    <div class="card">
+      <div class="card-title">⏰ Waktu Paling Sibuk</div>
+      <div class="card-sub">Pesakit Ikut Jam</div>
+      <div class="peak-wrap">
+        <div class="peak-col"><div class="peak-bar" style="height:30%;background:rgba(26,127,212,0.3);"></div><div class="peak-lbl">8am</div></div>
+        <div class="peak-col"><div class="peak-bar" style="height:55%;background:rgba(26,127,212,0.45);"></div><div class="peak-lbl">9am</div></div>
+        <div class="peak-col"><div class="peak-bar" style="height:100%;background:linear-gradient(180deg,#1a7fd4,#00bcd4);border-radius:3px 3px 0 0;"></div><div class="peak-lbl" style="color:#1a7fd4;font-weight:700;">10am</div></div>
+        <div class="peak-col"><div class="peak-bar" style="height:85%;background:rgba(26,127,212,0.7);"></div><div class="peak-lbl">11am</div></div>
+        <div class="peak-col"><div class="peak-bar" style="height:65%;background:rgba(26,127,212,0.55);"></div><div class="peak-lbl">12pm</div></div>
+        <div class="peak-col"><div class="peak-bar" style="height:40%;background:rgba(26,127,212,0.35);"></div><div class="peak-lbl">2pm</div></div>
+        <div class="peak-col"><div class="peak-bar" style="height:75%;background:rgba(26,127,212,0.6);"></div><div class="peak-lbl">3pm</div></div>
+        <div class="peak-col"><div class="peak-bar" style="height:88%;background:rgba(26,127,212,0.72);"></div><div class="peak-lbl">4pm</div></div>
+        <div class="peak-col"><div class="peak-bar" style="height:45%;background:rgba(26,127,212,0.38);"></div><div class="peak-lbl">5pm</div></div>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;">
+        <div style="background:#e3f2fd;border-radius:8px;padding:8px;text-align:center;">
+          <div style="font-size:8px;color:var(--muted);">PALING SIBUK</div>
+          <div style="font-size:14px;font-weight:800;color:#1a7fd4;">10am</div>
+        </div>
+        <div style="background:#e8f5e9;border-radius:8px;padding:8px;text-align:center;">
+          <div style="font-size:8px;color:var(--muted);">AVG/HARI</div>
+          <div style="font-size:14px;font-weight:800;color:#00c853;">46 org</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Payment Method -->
+    <div class="card">
+      <div class="card-title">💳 Kaedah Bayaran</div>
+      <div class="card-sub">Breakdown Transaksi</div>
+      <div class="pay-row">
+        <div class="pay-icon-box" style="background:#e3f2fd;">💵</div>
+        <div class="pay-info">
+          <div class="pay-hd">
+            <div class="pay-name">Tunai</div>
+            <div class="pay-right"><span class="pay-pct">35%</span><span class="pay-val">RM29.5K</span></div>
+          </div>
+          <div class="pay-bar-bg"><div class="pay-bar-fill" style="width:35%;background:linear-gradient(90deg,#1a7fd4,#00bcd4);"></div></div>
+        </div>
+      </div>
+      <div class="pay-row">
+        <div class="pay-icon-box" style="background:#f3e8ff;">🏢</div>
+        <div class="pay-info">
+          <div class="pay-hd">
+            <div class="pay-name">Panel/Insurans</div>
+            <div class="pay-right"><span class="pay-pct">32%</span><span class="pay-val">RM26.9K</span></div>
+          </div>
+          <div class="pay-bar-bg"><div class="pay-bar-fill" style="width:32%;background:linear-gradient(90deg,#7c3aed,#a855f7);"></div></div>
+        </div>
+      </div>
+      <div class="pay-row">
+        <div class="pay-icon-box" style="background:#e8f5e9;">📱</div>
+        <div class="pay-info">
+          <div class="pay-hd">
+            <div class="pay-name">QR/DuitNow</div>
+            <div class="pay-right"><span class="pay-pct">22%</span><span class="pay-val">RM18.5K</span></div>
+          </div>
+          <div class="pay-bar-bg"><div class="pay-bar-fill" style="width:22%;background:linear-gradient(90deg,#00c853,#69f0ae);"></div></div>
+        </div>
+      </div>
+      <div class="pay-row">
+        <div class="pay-icon-box" style="background:#fff3e0;">💳</div>
+        <div class="pay-info">
+          <div class="pay-hd">
+            <div class="pay-name">Kad Kredit/Debit</div>
+            <div class="pay-right"><span class="pay-pct">11%</span><span class="pay-val">RM9.3K</span></div>
+          </div>
+          <div class="pay-bar-bg"><div class="pay-bar-fill" style="width:11%;background:linear-gradient(90deg,#ff9800,#ffd200);"></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 6. ALERTS -->
+  <div class="section-label">⚠️ Alert Penting</div>
+  <div class="alert-card alert-warn">
+    <div class="alert-icon">⚠️</div>
+    <div>
+      <div class="alert-title" style="color:#e65100;">Outstanding Panel Claims</div>
+      <div class="alert-desc" style="color:#bf360c;">RM10,680 daripada 3 syarikat panel masih belum dibayar. Sila follow up segera dengan TNB, Felda & Telekom.</div>
+    </div>
+  </div>
+  <div class="alert-card alert-ok">
+    <div class="alert-icon">✅</div>
+    <div>
+      <div class="alert-title" style="color:#1b5e20;">Revenue Trend Positif</div>
+      <div class="alert-desc" style="color:#2e7d32;">Revenue naik +15.7% berbanding bulan lepas. Pesakit baru melebihi target — 112% pencapaian!</div>
+    </div>
+  </div>
+  <div class="alert-card alert-info">
+    <div class="alert-icon">📊</div>
+    <div>
+      <div class="alert-title" style="color:#0d47a1;">Target Bulanan Hampir Capai</div>
+      <div class="alert-desc" style="color:#1565c0;">Revenue bulanan dah capai 94% dari target RM90,000. Masih ada beberapa hari lagi untuk capai penuh!</div>
+    </div>
+  </div>
+
+  <!-- SUMMARY -->
+  <div class="section-label">📊 Rumusan</div>
+  <div class="sum-grid">
+    <div class="sum-item">
+      <div class="sum-icon">💰</div>
+      <div>
+        <div class="sum-val" style="color:#1a7fd4;">RM84.2K</div>
+        <div class="sum-lbl">Revenue Bulan Ini</div>
+      </div>
+    </div>
+    <div class="sum-item">
+      <div class="sum-icon">🚶</div>
+      <div>
+        <div class="sum-val" style="color:#00c853;">55%</div>
+        <div class="sum-lbl">Walk-in Revenue</div>
+      </div>
+    </div>
+    <div class="sum-item">
+      <div class="sum-icon">🏢</div>
+      <div>
+        <div class="sum-val" style="color:#7c3aed;">RM26.9K</div>
+        <div class="sum-lbl">Panel Revenue</div>
+      </div>
+    </div>
+    <div class="sum-item">
+      <div class="sum-icon">⚠️</div>
+      <div>
+        <div class="sum-val" style="color:#ff9800;">RM10.7K</div>
+        <div class="sum-lbl">Outstanding</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="bottom-space"></div>
+  <div class="footer">// Klinik Kasih Sayang · Revenue Dashboard · Feb 2026</div>
+</div>
+
+<!-- TAB BAR -->
+<div class="tab-bar">
+  <div class="tab-item active">
+    <div class="tab-icon">💰</div>
+    <div>Revenue</div>
+  </div>
+  <div class="tab-item">
+    <div class="tab-icon">🏥</div>
+    <div>Pesakit</div>
+  </div>
+  <div class="tab-item">
+    <div class="tab-icon">💊</div>
+    <div>Ubat</div>
+  </div>
+  <div class="tab-item">
+    <div class="tab-icon">👨‍⚕️</div>
+    <div>Doktor</div>
+  </div>
+</div>
+
+</body>
+</html>
